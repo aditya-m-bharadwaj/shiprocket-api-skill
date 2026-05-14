@@ -1,0 +1,19 @@
+title: "[Show & tell] "
+labels: ["show-and-tell"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Built something cool with `shiprocket-api-skill`? Share it here. **Don't paste real tokens, JWTs, or full order payloads** — redact identifiers in screenshots / logs.
+  - type: textarea
+    id: what
+    attributes:
+      label: What you built
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: How (commands / workflow)
+    validations:
+      required: false

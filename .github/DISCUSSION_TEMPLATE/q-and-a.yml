@@ -1,0 +1,28 @@
+title: "[Q&A] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about how something in `shiprocket-api-skill` works? Ask here. **Don't paste real tokens, JWTs, API-user passwords, or full order payloads** — redact identifiers.
+  - type: input
+    id: version
+    attributes:
+      label: shiprocket-api-skill version
+      description: Output of `shiprocket-api-skill --version`
+      placeholder: 0.1.0-alpha.1
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform (OS + Python)
+      placeholder: macOS 14.4 / Python 3.12
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true

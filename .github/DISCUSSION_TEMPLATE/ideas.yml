@@ -1,0 +1,20 @@
+title: "[Idea] "
+labels: ["ideas"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for a new named command, classifier improvement, workflow recipe, or skill text change? Share it here before filing an Issue.
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What would you like to see? Why?
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / use case
+    validations:
+      required: false

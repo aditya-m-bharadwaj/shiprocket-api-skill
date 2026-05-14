@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        exclude:
+          # macOS hosted runner images no longer reliably ship 3.8 / 3.9.
+          # Ubuntu coverage proves we still work on those versions.
+          - os: macos-latest
+            python: "3.8"
+          - os: macos-latest
+            python: "3.9"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Byte-compile bin/shiprocket-api-skill
+        shell: python {0}
+        run: |
+          import py_compile, sys
+          py_compile.compile("bin/shiprocket-api-skill", cfile="/tmp/sr.pyc", doraise=True)
+          print("byte-compile OK on", sys.version)
+
+      - name: Run unit tests
+        run: python -m unittest discover tests -v
+
+      - name: Smoke — classify a read path
+        run: python bin/shiprocket-api-skill classify GET /orders
+
+      - name: Smoke — classify a destructive path
+        run: python bin/shiprocket-api-skill classify POST /orders/cancel
+
+      - name: Smoke — classify a billable path
+        run: python bin/shiprocket-api-skill classify POST /courier/assign/awb
+
+  shellcheck:
+    name: shellcheck install.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: shellcheck install.sh
