@@ -26,3 +26,8 @@ docs/.obsidian/
 # post-commit hook (installed via `graphify hook install`). Run `graphify
 # update .` once on a fresh clone to populate it. Never tracked.
 graphify-out/
+
+# GitHub wiki — separate repo cloned into ./wiki for editing. The main repo
+# must never track the nested .git or page files. See
+# wiki/Contributing-to-the-Wiki for the clone-edit-push workflow.
+wiki/
